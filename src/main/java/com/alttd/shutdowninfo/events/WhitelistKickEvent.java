@@ -3,8 +3,7 @@ package com.alttd.shutdowninfo.events;
 import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.text.minimessage.Template;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class WhitelistKickEvent {
     private final Player player;
@@ -28,5 +27,9 @@ public class WhitelistKickEvent {
         return Collections.unmodifiableList(templates);
     }
 
-    public void appendTemplate(Template template) {this.templates.add(template);}
+    public void appendTemplate(HashMap<String, String> templateMap) {
+        for (Map.Entry<String, String> entry : templateMap.entrySet()) {
+            templates.add(Template.of(entry.getKey(), entry.getValue()));
+        }
+    }
 }
