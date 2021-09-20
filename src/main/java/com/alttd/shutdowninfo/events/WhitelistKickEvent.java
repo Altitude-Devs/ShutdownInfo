@@ -9,7 +9,7 @@ import java.util.List;
 public class WhitelistKickEvent {
     private final Player player;
     private String message;
-    List<Template> templates;
+    private final List<Template> templates;
 
     public WhitelistKickEvent(Player player, String message, List<Template> templates) {
         this.player = player;
@@ -28,6 +28,5 @@ public class WhitelistKickEvent {
         return Collections.unmodifiableList(templates);
     }
 
-    public void appendTemplates(Template template) {this.templates.add(template);}
-//    public void appendTemplates(Template... templates) {this.templates.addAll(List.of(templates));}
+    public void appendTemplate(Template template) {this.templates.add(template);}
 }
