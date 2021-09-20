@@ -28,5 +28,6 @@ public class WhitelistKickEvent {
         return Collections.unmodifiableList(templates);
     }
 
-    public void appendTemplates(Template... templates) {this.templates.addAll(List.of(templates));}
+    public void appendTemplates(Template template) {this.templates.add(template);}
+//    public void appendTemplates(Template... templates) {this.templates.addAll(List.of(templates));}
 }
