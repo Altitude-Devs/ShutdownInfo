@@ -8,6 +8,13 @@
     <artifactId>ShutdownInfo</artifactId>
     <version>1.0</version>
 
+    <distributionManagement>
+        <repository>
+            <id>Alttd-Nexus</id>
+            <url>https://repo.destro.xyz/snapshots</url>
+        </repository>
+    </distributionManagement>
+
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
