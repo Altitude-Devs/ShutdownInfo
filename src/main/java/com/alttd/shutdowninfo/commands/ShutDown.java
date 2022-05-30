@@ -14,8 +14,8 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 public class ShutDown {
 
     public ShutDown(ProxyServer proxyServer) {
-        Component ShutDownStart = MiniMessage.get().parse("<red>You have started the shutdown.</red>");
-        Component ShutDownEnd = MiniMessage.get().parse("<green>You have ended the shutdown.</green>");
+        Component ShutDownStart = MiniMessage.miniMessage().deserialize("<red>You have started the shutdown.</red>");
+        Component ShutDownEnd = MiniMessage.miniMessage().deserialize("<green>You have ended the shutdown.</green>");
 
         LiteralCommandNode<CommandSource> commandStart = LiteralArgumentBuilder
                 .<CommandSource>literal("shutdownstart")
@@ -24,7 +24,7 @@ public class ShutDown {
                     Config.setWhitelist(true);
                     context.getSource().sendMessage(ShutDownStart);
 
-                    Component message = MiniMessage.get().parse(Config.KICK_MESSAGE);
+                    Component message = MiniMessage.miniMessage().deserialize(Config.KICK_MESSAGE);
 
                     ShutdownInfo.getPlugin().getProxy().getAllPlayers().stream()
                             .filter(player -> !player.hasPermission("shutdown.bypass"))

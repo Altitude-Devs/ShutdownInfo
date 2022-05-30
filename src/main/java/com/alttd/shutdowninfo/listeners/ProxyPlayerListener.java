@@ -9,10 +9,9 @@ import com.velocitypowered.api.event.connection.LoginEvent;
 import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.Template;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -22,7 +21,7 @@ public class ProxyPlayerListener {
 
     public ProxyPlayerListener()
     {
-        miniMessage = MiniMessage.get();
+        miniMessage = MiniMessage.miniMessage();
     }
 
     @Subscribe
@@ -36,16 +35,14 @@ public class ProxyPlayerListener {
         if (event.getPlayer().hasPermission("shutdown.bypass"))
             return;
 
-        List<Template> templates = new ArrayList<>(List.of(
-                Template.of("player", player.getUsername())
-        ));
+        TagResolver tagResolver = Placeholder.unparsed("player", player.getUsername());
 
         CompletableFuture<WhitelistKickEvent> whitelistKickEvent = ShutdownInfo.getPlugin().getProxy().getEventManager()
-                .fire(new WhitelistKickEvent(player, Config.WHITELIST_MESSAGE, templates));
+                .fire(new WhitelistKickEvent(player, Config.WHITELIST_MESSAGE, tagResolver));
 
         try {
             WhitelistKickEvent result = whitelistKickEvent.get();
-            Component component = miniMessage.parse(result.getMessage(), result.getTemplates());
+            Component component = miniMessage.deserialize(result.getMessage(), result.getTagResolver());
 
             event.setResult(ResultedEvent.ComponentResult.denied(component));
         } catch (InterruptedException | ExecutionException e) {

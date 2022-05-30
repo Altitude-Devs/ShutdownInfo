@@ -12,7 +12,7 @@ public class PingListener {
     MiniMessage miniMessage;
 
     public PingListener() {
-        miniMessage = MiniMessage.get();
+        miniMessage = MiniMessage.miniMessage();
     }
 
     @Subscribe
@@ -21,7 +21,7 @@ public class PingListener {
             return;
 
         ServerPing.Builder builder = event.getPing().asBuilder();
-        Component component = miniMessage.parse(Config.PING_MESSAGE);
+        Component component = miniMessage.deserialize(Config.PING_MESSAGE);
 
         builder.onlinePlayers(-1);
         builder.maximumPlayers(0);
